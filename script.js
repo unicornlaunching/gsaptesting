@@ -10,13 +10,13 @@ tl.to("#video", {currentTime: 10, duration: 0.5}); // Scroll position at 1000px
 // Get video element
 const video = document.getElementById("video");
 
-// Variables to store previous scroll position
-let lastScrollPosition = 0;
+// Variable to store previous scroll position
+let lastScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
 // Listen for scroll event
 window.addEventListener("scroll", () => {
   // Get current scroll position
-  const currentScrollPosition = window.scrollY;
+  const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
   // Calculate scroll direction
   const scrollDirection = currentScrollPosition > lastScrollPosition ? "down" : "up";
   // Update last scroll position
