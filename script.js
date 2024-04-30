@@ -1,12 +1,3 @@
-// GSAP Animation Timeline
-const tl = gsap.timeline();
-
-// Define keyframes
-tl.to("#video", {currentTime: 0, duration: 0.5}); // Start
-tl.to("#video", {currentTime: 5, duration: 0.5}); // Scroll position at 500px
-tl.to("#video", {currentTime: 10, duration: 0.5}); // Scroll position at 1000px
-// Add more keyframes as needed
-
 // Get video element
 const video = document.getElementById("video");
 
@@ -21,14 +12,11 @@ window.addEventListener("scroll", () => {
   const scrollDirection = currentScrollPosition > lastScrollPosition ? "down" : "up";
   // Update last scroll position
   lastScrollPosition = currentScrollPosition;
-  // Calculate the video time based on scroll position and direction
-  const videoTime = currentScrollPosition / (document.body.scrollHeight - window.innerHeight) * video.duration;
-  // Reverse video playback if scrolling up
-  if (scrollDirection === "up") {
-    video.currentTime = video.duration - videoTime;
-  } else {
-    video.currentTime = videoTime;
-  }
+  // Calculate the video playback rate based on scroll speed and direction
+  const scrollSpeed = Math.abs(currentScrollPosition - lastScrollPosition);
+  const playbackRate = scrollDirection === "down" ? 1 + scrollSpeed / 100 : 1 - scrollSpeed / 100;
+  // Update video playback rate
+  video.playbackRate = playbackRate;
 });
 
 // Disable default scroll behavior
