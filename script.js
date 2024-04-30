@@ -7,28 +7,33 @@ let lastScrollPosition = window.pageYOffset || document.documentElement.scrollTo
 // Variable to store the playing state of the video
 let isVideoPlaying = false;
 
-// Listen for scroll event
-window.addEventListener("scroll", () => {
+// Function to update video playback
+function updateVideoPlayback() {
   // Get current scroll position
   const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
   // Calculate scroll progress
   const scrollProgress = currentScrollPosition / (document.body.scrollHeight - window.innerHeight);
   // Update video playback time based on scroll progress
   video.currentTime = scrollProgress * video.duration;
-  
-  // Start video playback when scrolling
-  if (!isVideoPlaying) {
+
+  // Start or pause video playback based on scrolling
+  if (!isVideoPlaying && Math.abs(currentScrollPosition - lastScrollPosition) > 0) {
     video.play();
     isVideoPlaying = true;
-  }
-  
-  // Pause video if scrolling stops
-  clearTimeout(videoScrollTimeout);
-  const videoScrollTimeout = setTimeout(() => {
+  } else if (isVideoPlaying && Math.abs(currentScrollPosition - lastScrollPosition) === 0) {
     video.pause();
     isVideoPlaying = false;
-  }, 100); // Adjust the timeout value as needed
-});
+  }
+
+  // Update last scroll position
+  lastScrollPosition = currentScrollPosition;
+
+  // Request the next animation frame
+  requestAnimationFrame(updateVideoPlayback);
+}
+
+// Start updating video playback
+updateVideoPlayback();
 
 // Disable default scroll behavior
 document.body.style.overflow = "hidden";
