@@ -10,14 +10,25 @@ tl.to("#video", {currentTime: 10, duration: 0.5}); // Scroll position at 1000px
 // Get video element
 const video = document.getElementById("video");
 
+// Variables to store previous scroll position
+let lastScrollPosition = 0;
+
 // Listen for scroll event
 window.addEventListener("scroll", () => {
-  // Get scroll position
-  const scrollPos = window.scrollY;
-  // Calculate the video time based on scroll position
-  const videoTime = scrollPos / (document.body.scrollHeight - window.innerHeight) * video.duration;
-  // Seek the video to the calculated time
-  video.currentTime = videoTime;
+  // Get current scroll position
+  const currentScrollPosition = window.scrollY;
+  // Calculate scroll direction
+  const scrollDirection = currentScrollPosition > lastScrollPosition ? "down" : "up";
+  // Update last scroll position
+  lastScrollPosition = currentScrollPosition;
+  // Calculate the video time based on scroll position and direction
+  const videoTime = currentScrollPosition / (document.body.scrollHeight - window.innerHeight) * video.duration;
+  // Reverse video playback if scrolling up
+  if (scrollDirection === "up") {
+    video.currentTime = video.duration - videoTime;
+  } else {
+    video.currentTime = videoTime;
+  }
 });
 
 // Disable default scroll behavior
