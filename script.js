@@ -15,7 +15,10 @@ window.addEventListener("scroll", () => {
   // Get scroll position
   const scrollPos = window.scrollY;
   // Calculate the video time based on scroll position
-  const videoTime = scrollPos / window.innerHeight * video.duration;
+  const videoTime = scrollPos / (document.body.scrollHeight - window.innerHeight) * video.duration;
   // Seek the video to the calculated time
   video.currentTime = videoTime;
 });
+
+// Disable default scroll behavior
+document.body.style.overflow = "hidden";
