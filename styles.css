@@ -1,14 +1,14 @@
 body, html {
   margin: 0;
   padding: 0;
-  height: 50%;
+  height: 100%;
 }
 
 .container {
-  height: 125vh; /* Adjust as needed to demonstrate scrolling */
+  height: 200vh; /* Adjust as needed to demonstrate scrolling */
 }
 
 video {
   display: block;
-  margin: 15vh auto; /* Centering the video */
+  margin: 50vh auto; /* Centering the video */
 }
