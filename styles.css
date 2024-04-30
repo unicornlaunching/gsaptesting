@@ -10,5 +10,19 @@ body, html {
 
 video {
   display: block;
-  margin: 50vh auto; /* Centering the video */
+  margin: 0 auto; /* Centering the video */
+  width: 100%; /* Make the video container full width */
+}
+
+/* Hide video controls */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+  display: none !important;
 }
